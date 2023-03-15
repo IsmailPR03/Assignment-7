@@ -13,11 +13,6 @@ let quizContainer = document.querySelector("#quizContainer");
 let answersContainer = document.querySelector("#answersContainer");
 let displayResult = document.querySelector("#displayResult");
 
-// Blog button
-document.getElementById("btn-blog").addEventListener("click", () => {
-  window.open("blog.html", "_blank");
-});
-
 // EventListener for quiz start button
 startQuiz.addEventListener("click", () => {
   let countDown = document.querySelector("#countDownContainer");
@@ -58,7 +53,6 @@ const loadQuiz = async () => {
 
 // Displaying quiz on quiz page
 const displayQuiz = (data) => {
-
   if (!data) {
     quizContainer.innerHTML = "";
     return;
@@ -80,7 +74,7 @@ const displayQuiz = (data) => {
 };
 
 // EventListener for quiz submit button
-document.querySelector("#submit").addEventListener("click", () => {
+document.querySelector("#submit").addEventlistener("click", () => {
   if (answers.length < 6) {
     return;
   }
@@ -114,7 +108,7 @@ document.querySelector("#submit").addEventListener("click", () => {
   }
 
   // data setting on local storage and getting data from local storage
-  let storage = JSON.parse(localStorage.getItem("results"));
+  let storage = JSON.parse(localStorage.getItem("result"));
   if (storage) {
     localStorage.setItem(
       "results",
@@ -152,15 +146,16 @@ document.querySelector("#submit").addEventListener("click", () => {
     </h1>
     <p class="text-sm flex justify-center items-center gap-2">
       Total Time: <span class="text-xl text-orange-500">${timeTaken.innerText.replace(
-      "sec",
-      ""
-    )}<span class="text-xs">sec</span></span>
+        "sec",
+        ""
+      )}<span class="text-xs">sec</span></span>
     </p>
   </div>
   
   <button onclick="location.reload();" class="bg-green-600 text-white w-full py-2 rounded mt-16">Restart</button>
-  ${storage
-        ? `<div class="mt-5">
+  ${
+    storage
+      ? `<div class="mt-5">
       <h1 class="text-center">Previous Submissions <button class="text-blue-800 text-xs" onclick={localStorage.clear();location.reload()}>Clear History</button></h1>
     <div
     class="flex justify-between items-center border rounded p-2 my-2 shadow-sm font-medium">
@@ -169,18 +164,18 @@ document.querySelector("#submit").addEventListener("click", () => {
     <div>Time</div>
     </div>
     ${storage
-          ?.reverse()
-          ?.map(
-            (item) => `<div
+      ?.reverse()
+      ?.map(
+        (item) => `<div
       class="flex justify-between items-center border rounded p-2 my-2 shadow-sm">
       <div>${item.marks}/60</div>
       <div>${item.status}</div>
       <div>${item.examTime}</div>
       </div>`
-          )
-          ?.join("")}`
-        : ""
-      }
+      )
+      ?.join("")}`
+      : ""
+  }
   </div>
   `;
 
@@ -188,5 +183,3 @@ document.querySelector("#submit").addEventListener("click", () => {
   }, 1500);
   window.scrollTo(0, 0);
 });
-
-
